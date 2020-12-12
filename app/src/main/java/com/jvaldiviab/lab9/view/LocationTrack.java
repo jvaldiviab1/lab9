@@ -18,16 +18,19 @@ import androidx.annotation.Nullable;
 
 public class LocationTrack extends Service implements LocationListener {
 
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; //It updates the location for a distance difference of 5 meters.
-    private static final long MIN_TIME_BW_UPDATES = 1000; // 1 minute is the time interval for updation
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
+    private static final long MIN_TIME_BW_UPDATES = 1000;
+
     private Context mContext;
-    public LocationManager locationManager; // This is the location Manager
-    boolean isGPSEnabled = false; // GPS status
-    boolean isNetworkEnabled = false; //Network status
-    boolean canGetLocation = false; // status if location can be found
-    Location location; // location
-    double latitude; // latitude
-    double longitude; // longitude
+    public LocationManager locationManager;
+
+    boolean isGPSEnabled = false;
+    boolean isNetworkEnabled = false;
+    boolean canGetLocation = false;
+
+    Location location;
+    double latitude;
+    double longitude;
 
     public LocationTrack(Context mContext) {
         this.mContext = mContext;
@@ -38,14 +41,13 @@ public class LocationTrack extends Service implements LocationListener {
     public Location getLocacion() {
         try {
             locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
-            // getting GPS status
+
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            // getting network status
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
             if (!isGPSEnabled && !isNetworkEnabled) {
             } else {
                 this.canGetLocation = true;
-                //get location from the provider
                 if (isNetworkEnabled) {
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                     Log.d("Network", "Network");
@@ -79,7 +81,6 @@ public class LocationTrack extends Service implements LocationListener {
     }
 
 
-    // This method will help finding the Latitude
     public double getLatitude() {
         if (location != null) {
             latitude = location.getLatitude();
@@ -87,7 +88,6 @@ public class LocationTrack extends Service implements LocationListener {
         return latitude;
     }
 
-    // This method will help finding the Latitude
     public double getLongitude() {
         if (location != null) {
             longitude = location.getLongitude();
@@ -95,12 +95,10 @@ public class LocationTrack extends Service implements LocationListener {
         return longitude;
     }
 
-    //This method is to check if GPS is enabled
     public boolean canGetLocation() {
         return this.canGetLocation;
     }
 
-    //This will launch settings
     public void showSettings() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         alertDialog.setTitle("GPS is settings");
@@ -116,7 +114,6 @@ public class LocationTrack extends Service implements LocationListener {
                 dialog.cancel();
             }
         });
-        // Showing Alert Message
         alertDialog.show();
     }
 

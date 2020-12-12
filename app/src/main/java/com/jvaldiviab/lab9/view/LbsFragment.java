@@ -11,10 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jvaldiviab.lab9.R;
-import com.jvaldiviab.lab9.databinding.FragmentFlpBinding;
 import com.jvaldiviab.lab9.databinding.FragmentLbsBinding;
-
 
 public class LbsFragment extends Fragment {
 
